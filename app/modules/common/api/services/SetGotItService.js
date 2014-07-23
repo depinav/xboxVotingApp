@@ -1,0 +1,21 @@
+'use strict';
+
+angular.module('NerderySetGotItService', ['NerderyConstants'])
+  .factory('SetGotIt', function ($q, $http, CONSTANTS) {
+    return {
+      getGames: function(gameId) {
+
+        return $http.get(CONSTANTS.API_URL + 'setGotIt?callback=&apiKey=' + CONSTANTS.API_KEY + '&id=' + gameId)
+          .then(function(response) {
+
+            if(typeof response.data === 'object') {
+              return response.data;
+            } else {
+              return $q.reject(response.data);
+            }
+          }, function(response) {
+              return $q.reject(response.data);
+          });
+      }
+    };
+  });
