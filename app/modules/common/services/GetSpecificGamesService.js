@@ -1,30 +1,25 @@
 'use strict';
 
 angular.module('GetSpecificGamesService', ['NerderyGetGamesService'])
-  .factory('GetSpecificGames', function($scope, GetGames) {
+  .factory('GetSpecificGames', function($q, GetGames) {
     return {
 
-      getOwnedGames: function() {
-        GetGames.getGames().then(function(data) {
-          $scope.ownedGamesList;
-
-          angular.forEach(data, function(game) {
-            if (game.status === 'gotit') {
-              $scope.ownedGamesList.push(game);
-            }
-          });
-        })
-      },
       getWantedGames: function() {
-        GetGames.getGames().then(function(data) {
-          $scope.ownedGamesList;
+        var deferred = $q.defer();
+        var gamesList = [];
 
-          angular.forEach(data, function(game) {
-            if (game.status === 'wantit') {
-              $scope.ownedGamesList.push(game);
-            }
+        GetGames.getGames().then(
+        function(response) {
+          angular.forEach(response, function(game) {
+            gamesList.push(game);
           });
-        })
+
+          deferred.resolve(gamesList);
+        },
+        function(response) {
+          console.log('Error: ', error);
+        });
+        return deferred.promise;
       }
-    }
+    };
   });

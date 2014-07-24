@@ -1,3 +1,15 @@
-ul 
-  li(ng-repeat="game in gamesList")
-    {{game.title}}
+table.table.table-condensed.table-striped
+  thead
+    tr
+      th Title
+      th Votes
+      th Vote
+      th Owned?
+  tbody
+    tr(ng-repeat="game in gamesList")
+      th {{game.title}}
+      th {{game.votes}}
+      th
+        button.btn Vote!
+      th
+        button.btn Owned?

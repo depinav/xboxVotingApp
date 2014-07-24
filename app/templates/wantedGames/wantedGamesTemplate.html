@@ -1,1 +1,1 @@
-<ul><li ng-repeat="game in gamesList">{{game.title}}</li></ul>
+<table class="table table-condensed table-striped"><thead><tr><th>Title</th><th>Votes</th><th>Vote</th><th>Owned?</th></tr></thead><tbody><tr ng-repeat="game in gamesList"><th>{{game.title}}</th><th>{{game.votes}}</th><th><button class="btn">Vote!</button></th><th><button class="btn">Owned?</button></th></tr></tbody></table>

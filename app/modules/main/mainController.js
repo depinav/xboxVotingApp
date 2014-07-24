@@ -1,18 +1,10 @@
 'use strict';
 
 angular.module('xboxGameVotingApp')
-  .controller('MainCtrl', ['$scope', 'GetGames',
-  function($scope, GetGames) {
+  .controller('NavCtrl', ['$scope',
+  function($scope) {
 
     $scope.category;
-
-    /*$scope.getGames = function() {
-      GetGames.getGames().then(function(data) {
-      $scope.nerdery.gamesList = data;
-      }, function(error) {
-      console.log('Error: ', error)
-      });
-    }*/
 
     $scope.sortCategory = function(category) {
       $scope.category = category;
@@ -22,4 +14,7 @@ angular.module('xboxGameVotingApp')
       return $scope.category === category;
     }
   }
-]);
+])
+  .controller('MainCtrl', ['$scope', 
+  function($scope) {
+  }]);
