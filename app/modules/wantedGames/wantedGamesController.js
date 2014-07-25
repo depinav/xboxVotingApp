@@ -3,7 +3,7 @@
 angular.module('xboxGameVotingApp')
   .controller('WantedGamesCtrl', ['$scope', 'GetSpecificGames',
   function($scope, GetSpecificGames) {
-    $scope.gamesList;
+    $scope.gamesList = [];
 
     GetSpecificGames.getWantedGames().then(function(response) {
       $scope.gamesList = response;

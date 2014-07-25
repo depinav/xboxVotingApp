@@ -3,7 +3,7 @@
 angular.module('NerderySetGotItService', ['NerderyConstants'])
   .factory('SetGotIt', function ($q, $http, CONSTANTS) {
     return {
-      getGames: function(gameId) {
+      setGotIt: function(gameId) {
 
         return $http.get(CONSTANTS.API_URL + 'setGotIt?callback=&apiKey=' + CONSTANTS.API_KEY + '&id=' + gameId)
           .then(function(response) {

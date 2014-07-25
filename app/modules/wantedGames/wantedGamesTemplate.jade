@@ -6,7 +6,7 @@ table.table.table-condensed.table-striped
       th Vote
       th Owned?
   tbody
-    tr(ng-repeat="game in gamesList")
+    tr(ng-repeat="game in gamesList", ng-model="game")
       th {{game.title}}
       th {{game.votes}}
       th

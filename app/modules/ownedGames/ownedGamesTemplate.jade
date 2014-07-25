@@ -1,1 +1,7 @@
-p Hello {{name || "World"}}
+table.table.table-condensed.table-striped
+  thead
+    tr
+      th Title
+  tbody
+    tr(ng-repeat="game in gamesList")
+      th {{game.title}}
