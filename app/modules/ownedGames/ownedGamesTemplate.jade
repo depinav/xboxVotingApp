@@ -3,5 +3,5 @@ table.table.table-condensed.table-striped
     tr
       th Title
   tbody
-    tr(ng-repeat="game in gamesList")
+    tr(ng-repeat="game in gamesList | orderBy:'title'")
       th {{game.title}}

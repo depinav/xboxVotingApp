@@ -10,10 +10,10 @@ div.row
           th Vote
           th Owned?
       tbody
-        tr(ng-repeat="game in gamesList | orderBy:ordered:true", ng-model="game")
+        tr(ng-repeat="game in gamesList | filter:{game.status:status}", ng-model="game")
           th {{game.title}}
           th {{game.votes}}
           th
-            button.btn(ng-controller="VoteForGameCtrl", ng-click="vote(game)") Vote!
+            button.btn(ng-show="game.status === 'wantit'") Vote!
           th
-            button.btn(ng-controller="SetOwnedGameCtrl", ng-click="owned(game)") Owned?
+            button.btn(ng-show="game.status === 'wantit'") Owned?

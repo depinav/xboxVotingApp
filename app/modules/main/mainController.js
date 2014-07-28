@@ -2,7 +2,7 @@
 
 angular.module('xboxGameVotingApp')
   .controller('NavCtrl', ['$scope', '$modal',
-  function($scope, $modal, WantedGamesCtrl) {
+  function($scope, $modal) {
 
     $scope.category;
     $scope.collapsed = true;
@@ -26,32 +26,11 @@ angular.module('xboxGameVotingApp')
       modalInstance.result.then(function(game) {
         WantedGamesCtrl.gamesList.push(game)
       }, function() {
-        $log.warn('Service not called successfully.');
+        console.log('Modal Dismissed, no service called');
       });
     };
   }
   ])
   .controller('MainCtrl', ['$scope',
   function($scope) {
-  }])
-  .controller('AddGameModalCtrl', ['$scope', '$modalInstance', 'AddGame',
-  function($scope, $modalInstance, AddGame) {
-    $scope.game = {};
-
-    $scope.save = function() {
-      AddGame.addGame($scope.game.title).then(
-      function(response) {
-        $scope.game = response;
-      },
-      function(response) {
-        console.log('Error: ', response);
-      });
-
-      $modalInstance.close($scope.game);
-    };
-
-    $scope.cancel = function() {
-      $modalInstance.dismiss('cancel');
-    };
-
   }]);

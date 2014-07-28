@@ -8,7 +8,7 @@ angular.module('NerderyAddVoteService', ['NerderyConstants'])
         return $http.get(CONSTANTS.API_URL + 'addVote?callback=&apiKey=' + CONSTANTS.API_KEY + '&id=' + gameId)
           .then(function(response) {
 
-            if(typeof response.data === 'object') {
+            if(response.data === 'true') {
               return true;
             } else {
               return $q.reject(response.data);

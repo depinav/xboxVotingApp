@@ -1,27 +1,31 @@
 'use strict';
 
-angular.module('xboxGameVotingApp')
-  .controller('WantedGamesCtrl', ['$scope', 'GetSpecificGames', 'AddVote', 'SetGotIt',
-  function($scope, GetSpecificGames, AddVote, SetGotIt) {
-    $scope.gamesList = [];
-    $scope.ordered = 'votes';
+angular.module('GamesList', ['API_MODULE'])
+  .controller('GamesListController', ['$scope', '$log', 'GetGames',
+  function($scope, $log, GetGames) {
+    $scope.gamesList;
+    $scope.status = 'wantit';
 
-    $scope.getGames = function() {
-      GetSpecificGames.getWantedGames().then(function(response) {
+    $scope.getGamesList = function() {
+      var games = [];
+      GetGames.getGames().then(
+      function(response){
         $scope.gamesList = response;
-      }, function(response) {
-        console.log('Error: ', response);
-      });
+      },
+      function(response) {
+        $log.error('Service not called successfully: ', response)
+      })
     }
 
-    $scope.getGames();
+    $scope.getGamesList();
 
     $scope.$on('GameModelChanged', function(event, args) {
-      $scope.getGames();
+      $scope.getGamesList();
     })
   }])
-  .controller('VoteForGameCtrl', ['$scope', 'AddVote',
-  function($scope, AddVote) {
+  .controller('GamesListVoteController', ['$scope', '$log', 'AddVote',
+  function($scope, $log, AddVote) {
+
     $scope.vote = function(game) {
       AddVote.addVote(game.id).then(
       function(response) {
@@ -29,21 +33,7 @@ angular.module('xboxGameVotingApp')
         $scope.$emit('GameModelChanged', game);
       },
       function(response) {
-         console.log('Service call failed.');
-      });
-    }
-
-  }])
-  .controller('SetOwnedGameCtrl', ['$scope', 'SetGotIt',
-  function($scope, SetGotIt) {
-    $scope.owned = function(game) {
-      SetGotIt.setGotIt(game.id).then(
-      function(response) {
-        alert('Game set to owned');
-        $scope.$emit('GameModelChanged', game);
-      },
-      function(respons) {
-        console.log('Service call failed.')
+        console.log('Service call failed.');
       });
     }
 
@@ -52,6 +42,7 @@ angular.module('xboxGameVotingApp')
   function($scope, $modal) {
 
     $scope.open = function() {
+
       var modalInstance = $modal.open({
         templateUrl: 'templates/modal/addGameModalTemplate.html',
         controller: 'AddGameModalInstanceCtrl',
@@ -59,6 +50,7 @@ angular.module('xboxGameVotingApp')
       });
 
       modalInstance.result.then(function(game) {
+        game.votes = 1;
         $scope.$emit('GameModelChanged', game);
       }, function() {
         console.log('Modal Dismissed, no service called');
@@ -71,7 +63,6 @@ angular.module('xboxGameVotingApp')
     $scope.game = {};
 
     $scope.save = function() {
-      console.log($scope.gamesList);
       AddGame.addGame($scope.game.title).then(
       function(response) {
         $scope.game = response;

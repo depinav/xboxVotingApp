@@ -18,7 +18,7 @@ angular.module('GetSpecificGamesService', ['NerderyGetGamesService'])
           deferred.resolve(gamesList);
         },
         function(response) {
-          console.log('Error: ', error);
+          console.log('Error: ', response);
         });
         return deferred.promise;
       },

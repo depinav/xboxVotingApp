@@ -34,11 +34,6 @@
             <a class="text-muted navbar-brand" ng-click="navCollapsed = !navCollapsed" href="#/">Xbox Game Voting</a>
           </div>
           <div collapse="navCollapsed">
-            <ul class="nav navbar-nav">
-              <li><a ng-click="open()" href="javascript:void(0)">
-                  Add Game
-              </a></li>
-            </ul>
             <ul class="nav navbar-nav navbar-right">
               <li ng-click="sortCategory('want')" ng-class="{'active': isActive('want')}" ><a ng-href="#/wantedGames">Wanted Games</a></li>
               <li ng-click="sortCategory('got')" ng-class="{'active': isActive('got')}"><a ng-href="#/ownedGames">Owned Games</a></li>
@@ -75,18 +70,6 @@
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/affix.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/alert.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/button.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/carousel.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/collapse.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/dropdown.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tab.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/transition.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/scrollspy.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/modal.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tooltip.js"></script>
-    <script src="bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/popover.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -99,15 +82,19 @@
         <script src="scripts/app.js"></script>
         <script src="modules/common/ApiModule.js"></script>
         <script src="modules/common/ServicesModule.js"></script>
+        <script src="modules/common/DirectivesModule.js"></script>
         <script src="scripts/config/constants.js"></script>
         <script src="modules/common/api/services/GetGamesService.js"></script>
         <script src="modules/common/api/services/AddGameService.js"></script>
         <script src="modules/common/api/services/AddVoteService.js"></script>
         <script src="modules/common/api/services/SetGotItService.js"></script>
         <script src="modules/common/services/GetSpecificGamesService.js"></script>
+        <script src="modules/common/directives/modal/addGameModalDirective.js" ></script>
+        <script src="modules/common/directives/modal/addGameModalController.js"></script>
         <script src="modules/main/mainController.js"></script>
         <script src="modules/ownedGames/ownedGamesController.js"></script>
         <script src="modules/wantedGames/wantedGamesController.js"></script>
+        <script src="modules/gamesList/controller/gamesListController.js"></script>
         <!-- endbuild -->
 </body>
 </html>

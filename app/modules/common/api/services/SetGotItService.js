@@ -8,7 +8,7 @@ angular.module('NerderySetGotItService', ['NerderyConstants'])
         return $http.get(CONSTANTS.API_URL + 'setGotIt?callback=&apiKey=' + CONSTANTS.API_KEY + '&id=' + gameId)
           .then(function(response) {
 
-            if(typeof response.data === 'object') {
+            if(response.data === 'true') {
               return response.data;
             } else {
               return $q.reject(response.data);
