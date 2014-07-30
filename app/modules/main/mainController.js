@@ -15,22 +15,10 @@ angular.module('xboxGameVotingApp')
       return $scope.category === category;
     }
 
-    $scope.open = function() {
-
-      var modalInstance = $modal.open({
-        templateUrl: 'templates/modal/addGameModalTemplate.html',
-        controller: 'AddGameModalCtrl',
-        size: 'sm'
-      });
-
-      modalInstance.result.then(function(game) {
-        WantedGamesCtrl.gamesList.push(game)
-      }, function() {
-        console.log('Modal Dismissed, no service called');
-      });
-    };
-  }
-  ])
+    $scope.collapse = function(navCollapsed) {
+      $scope.collapsed = navCollapsed;
+    }
+  }])
   .controller('MainCtrl', ['$scope',
   function($scope) {
   }]);

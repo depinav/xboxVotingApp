@@ -10,7 +10,7 @@ div.row
           th Vote
           th Owned?
       tbody
-        tr(ng-repeat="game in gamesList | orderBy:ordered:true", ng-model="game")
+        tr(ng-repeat="game in wantedGames | orderBy:ordered:true", ng-model="game")
           th {{game.title}}
           th {{game.votes}}
           th

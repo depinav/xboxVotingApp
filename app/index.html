@@ -25,19 +25,18 @@
       <div ng-controller="NavCtrl" class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
-            <button type="button" ng-click="collapse(!navCollapsed)" class="navbar-toggle btn btn-navbar">
+            <button type="button" ng-click="collapse(!collapsed)" class="navbar-toggle btn btn-navbar">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="text-muted navbar-brand" ng-click="navCollapsed = !navCollapsed" href="#/">Xbox Game Voting</a>
+            <a class="text-muted navbar-brand" ng-click="sortCategory('home')" href="#/">Xbox Game Voting</a>
           </div>
-          <div collapse="navCollapsed">
+          <div collapse="collapsed">
             <ul class="nav navbar-nav navbar-right">
               <li ng-click="sortCategory('want')" ng-class="{'active': isActive('want')}" ><a ng-href="#/wantedGames">Wanted Games</a></li>
               <li ng-click="sortCategory('got')" ng-class="{'active': isActive('got')}"><a ng-href="#/ownedGames">Owned Games</a></li>
-              <li ng-click="sortCategory('contact')" ng-class="{'active': isActive('contact')}"><a ng-href="#/contact">Contact</a></li>
             </ul>
           </div>
         </div>
@@ -89,8 +88,6 @@
         <script src="modules/common/api/services/AddVoteService.js"></script>
         <script src="modules/common/api/services/SetGotItService.js"></script>
         <script src="modules/common/services/GetSpecificGamesService.js"></script>
-        <script src="modules/common/directives/modal/addGameModalDirective.js" ></script>
-        <script src="modules/common/directives/modal/addGameModalController.js"></script>
         <script src="modules/main/mainController.js"></script>
         <script src="modules/ownedGames/ownedGamesController.js"></script>
         <script src="modules/wantedGames/wantedGamesController.js"></script>

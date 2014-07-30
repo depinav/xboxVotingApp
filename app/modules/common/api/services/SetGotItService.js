@@ -9,7 +9,7 @@ angular.module('NerderySetGotItService', ['NerderyConstants'])
           .then(function(response) {
 
             if(response.data === 'true') {
-              return response.data;
+              return true;
             } else {
               return $q.reject(response.data);
             }

@@ -9,15 +9,13 @@ angular.module('NerderyAddGameService', ['NerderyConstants'])
           .then(function(response) {
 
             if(typeof response.data === 'object') {
-              deferred.resolve(response);
+              return response.data;
             } else {
               return $q.reject(response.data);
             }
           }, function(response) {
               return $q.reject(response.data);
           });
-          
-          return deferred.promise;
       }
     };
   });
