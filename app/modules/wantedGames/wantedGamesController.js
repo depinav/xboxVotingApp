@@ -9,7 +9,7 @@ angular.module('xboxGameVotingApp')
 
 
     if(typeof(Storage) != undefined) {
-      if(localStorage.getItem('voted') === null && localStorage.getItem('day') !== new Date().getDay())
+      if(localStorage.getItem('voted') === null || localStorage.getItem('day') !== new Date().getDay())
         localStorage.setItem('voted', false);
     } else {
       console.log('Couldn\'t do it');
@@ -43,7 +43,7 @@ angular.module('xboxGameVotingApp')
 
       if(day.getDay() !== 6 && day.getDay() !== 0) {
 
-        if($cookieStore.get('voted') !== true) {
+        if($cookieStore.get('voted') !== true || $cookieStore.get('day') !== new Date().getDay()) {
 
           $cookieStore.put('voted', true);
           $cookieStore.put('day', new Date().getDay());
@@ -120,6 +120,8 @@ angular.module('xboxGameVotingApp')
         function(response) {
           console.log('Error: ', response);
         });
+      } else {
+        alert('Game already added to list. Check "Owned Games" page.');
       }
 
       $modalInstance.close($scope.game);
