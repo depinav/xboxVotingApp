@@ -9,7 +9,7 @@ angular.module('NerderySetGotItService', ['NerderyConstants'])
         $http.jsonp(CONSTANTS.API_URL + 'setGotIt?callback=JSON_CALLBACK&apiKey=' + CONSTANTS.API_KEY + '&id=' + gameId)
           .then(function(response) {
 
-            if(response.data === 'true') {
+            if(response.data === true) {
               deferred.resolve(response.data);
             } else {
               deferred.reject(response.data);

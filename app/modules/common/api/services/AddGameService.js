@@ -9,7 +9,7 @@ angular.module('NerderyAddGameService', ['NerderyConstants'])
         $http.jsonp(CONSTANTS.API_URL + 'addGame?callback=JSON_CALLBACK&apiKey=' + CONSTANTS.API_KEY + '&title=' + gameTitle)
           .then(function(response) {
 
-            if(typeof response.data === 'object') {
+            if(response.data === true) {
               deferred.resolve(response.data);
             } else {
               deferred.reject(response.data);
@@ -17,7 +17,7 @@ angular.module('NerderyAddGameService', ['NerderyConstants'])
           }, function(response) {
               deferred.reject(response.data);
           });
-          
+
         return deferred.promise;
       }
     };
