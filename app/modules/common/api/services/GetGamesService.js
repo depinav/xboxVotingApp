@@ -4,18 +4,21 @@ angular.module('NerderyGetGamesService', ['NerderyConstants'])
   .factory('GetGames', function ($q, $http, CONSTANTS) {
     return {
       getGames: function() {
+        var deferred = $q.defer();
 
-        return $http.get(CONSTANTS.API_URL + 'getGames?callback=&apiKey=' + CONSTANTS.API_KEY)
+        $http.jsonp(CONSTANTS.API_URL + 'getGames?callback=JSON_CALLBACK&apiKey=' + CONSTANTS.API_KEY)
           .then(function(response) {
 
             if(typeof response.data === 'object') {
-              return response.data;
+              deferred.resolve(response.data);
             } else {
-              return $q.reject(response.data);
+              deferred.reject(response.data);
             }
           }, function(response) {
-              return $q.reject(response.data);
+              deferred.reject(response.data);
           });
+
+        return deferred.promise;
       }
     };
   });
