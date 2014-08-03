@@ -4,7 +4,7 @@ angular.module('xboxGameVotingApp')
   .controller('NavCtrl', ['$scope', '$modal',
   function($scope, $modal) {
 
-    $scope.category;
+    $scope.category = 'want';
     $scope.collapsed = true;
 
     $scope.sortCategory = function(category) {

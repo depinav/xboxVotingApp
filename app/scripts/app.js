@@ -12,10 +12,10 @@
     ])
     .config(function ($routeProvider) {
       $routeProvider
-      .when('/', {
-        templateUrl: 'templates/main/mainTemplate.html',
-        controller: 'MainCtrl'
-      })
+      // .when('/', {
+      //   templateUrl: 'templates/main/mainTemplate.html',
+      //   controller: 'MainCtrl'
+      // })
       .when('/wantedGames', {
         templateUrl: 'templates/wantedGames/wantedGamesTemplate.html',
         controller: 'WantedGamesCtrl'
@@ -28,7 +28,7 @@
         templateUrl: '404.html',
       })
       .otherwise({
-        redirectTo: '/404'
+        redirectTo: '/wantedGames'
       });
     });
 })();
