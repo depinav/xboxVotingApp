@@ -3,6 +3,6 @@
 Make sure to have npm and node.js installed.
 
 Then run
-* npm install
-* bower install
-* grunt serve
+* ``$ npm install``
+* ``$ bower install``
+* ``$ grunt serve``
