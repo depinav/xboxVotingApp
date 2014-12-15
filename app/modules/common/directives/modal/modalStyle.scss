@@ -1,0 +1,45 @@
+//colors
+$black: #000000;
+$white: #fff;
+
+//fonts
+$font_0: arial;
+$font_1: sans-serif;
+
+.ng-modal-overlay {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $black;
+  opacity: 0.8;
+}
+.ng-modal-dialog {
+  z-index: 10000;
+  position: absolute;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  //Instead of the line below you could use @includetransform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+  transform: translate(-50%, -50%);
+  background-color: $white;
+  //Instead of the line below you could use @includebox-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+  box-shadow: 4px 4px 80px $black;
+}
+.ng-modal-dialog-content {
+  padding: 10px;
+  text-align: left;
+}
+.ng-modal-close {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 120%;
+  display: inline-block;
+  font-weight: bold;
+  font-family: $font_0, $font_1;
+}

@@ -9,15 +9,15 @@ angular.module('xboxGameVotingApp')
 
     $scope.sortCategory = function(category) {
       $scope.category = category;
-    }
+    };
 
     $scope.isActive = function(category) {
       return $scope.category === category;
-    }
+    };
 
     $scope.collapse = function(navCollapsed) {
       $scope.collapsed = navCollapsed;
-    }
+    };
   }])
   .controller('MainCtrl', ['$scope',
   function($scope) {

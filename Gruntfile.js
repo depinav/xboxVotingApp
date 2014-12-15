@@ -43,7 +43,7 @@ module.exports = function (grunt) {
         tasks: ['newer:jshint:test', 'karma']
       },
       compass: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}', '<%= yeoman.app %>/**/**/**/**/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer']
       },
       jade: {
@@ -290,7 +290,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/modules',
-          src: [ '**/*.jade', '**/**/**/*.jade' ],
+          src: [ '**/*.jade', '**/**/**/*.jade', '**/**/**/**/**/.*jade' ],
           dest: '<%= yeoman.app %>/templates',
           ext: '.html'
         }]

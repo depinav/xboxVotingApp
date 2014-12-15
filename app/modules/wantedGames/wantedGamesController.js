@@ -1,16 +1,18 @@
 'use strict';
 
 angular.module('xboxGameVotingApp')
-  .controller('WantedGamesCtrl', ['$scope', '$cookieStore', 'GetGames', 'AddVote', 'SetGotIt',
-  function($scope, $cookieStore, GetGames, AddVote, SetGotIt) {
+  .controller('WantedGamesCtrl', function($scope, $window, $modal, GetGames, AddVote, SetGotIt) {
     $scope.gamesList = [];
     $scope.wantedGames = [];
     $scope.ordered = 'votes';
+    $scope.showModal = false;
+    var day = new Date();
 
 
-    if(typeof(Storage) != undefined) {
-      if(localStorage.getItem('voted') === null || localStorage.getItem('day') !== new Date().getDay())
+    if(typeof(Storage) !== undefined) {
+      if(localStorage.getItem('voted') === null || localStorage.getItem('day') !== new Date().getDay()) {
         localStorage.setItem('voted', false);
+      }
     } else {
       console.log('Couldn\'t do it');
     }
@@ -21,114 +23,102 @@ angular.module('xboxGameVotingApp')
 
         $scope.wantedGames = [];
         angular.forEach($scope.gamesList, function(wantedGame) {
-          if(wantedGame.status === 'wantit')
+          if(wantedGame.status === 'wantit') {
             $scope.wantedGames.push(wantedGame);
+          }
         });
       }, function(response) {
         console.log('Error: ', response);
       });
-    }
+    };
 
     $scope.getGames();
-
-    $scope.$on('GameModelChanged', function(event, args) {
-      $scope.getGames();
-    })
-  }])
-  .controller('VoteForGameCtrl', ['$scope', '$cookieStore', 'AddVote',
-  function($scope, $cookieStore, AddVote) {
-    var day = new Date();
 
     $scope.vote = function(game) {
 
       if(day.getDay() !== 6 && day.getDay() !== 0) {
 
-        if($cookieStore.get('voted') !== true || $cookieStore.get('day') !== new Date().getDay()) {
+        if(localStorage.getItem('voted') !== true || localStorage.getItem('day') !== new Date().getDay()) {
 
-          $cookieStore.put('voted', true);
-          $cookieStore.put('day', new Date().getDay());
-          console.log($cookieStore.get('day'));
+          localStorage.setItem('voted', true);
+          localStorage.setItem('day', new Date().getDay());
+          console.log(localStorage.getItem('day'));
           AddVote.addVote(game.id).then(
-          function(response) {
-            alert('Done!');
+            function() {
+              $window.alert('Done!');
+              $scope.$emit('GameModelChanged', game);
+            },
+            function() {
+              console.log('Service call failed.');
+            });
+          } else {
+            $window.alert('Already voted today. Try again tomorrow.');
+          }
+        } else {
+          $window.alert('Voting closed on Saturday and Sunday.');
+        }
+      };
+
+      $scope.owned = function(game) {
+        SetGotIt.setGotIt(game.id).then(
+          function() {
+            $window.alert('Game set to owned');
             $scope.$emit('GameModelChanged', game);
           },
-          function(response) {
-             console.log('Service call failed.');
+          function() {
+            console.log('Service call failed.');
           });
-        } else {
-          alert('Already voted today. Try again tomorrow.');
-        }
-      } else {
-        alert('Voting closed on Saturday and Sunday.');
-      }
-    }
+        };
 
-  }])
-  .controller('SetOwnedGameCtrl', ['$scope', 'SetGotIt',
-  function($scope, SetGotIt) {
+        $scope.open = function() {
+          var modalInstance = $modal.open({
+            templateUrl: 'templates/modal/addGameModalTemplate.html',
+            controller: 'AddGameModalInstanceCtrl',
+            size: 'sm',
+            resolve: {
+              gamesList: function() {return $scope.gamesList;}
+            }
+          });
 
-    $scope.owned = function(game) {
-      SetGotIt.setGotIt(game.id).then(
-      function(response) {
-        alert('Game set to owned');
-        $scope.$emit('GameModelChanged', game);
-      },
-      function(respons) {
-        console.log('Service call failed.')
-      });
-    }
+          modalInstance.result.then(function(game) {
+            $scope.$emit('GameModelChanged', game);
+          }, function() {
+            console.log('Modal Dismissed, no service called');
+          });
+        };
 
-  }])
-  .controller('AddGameModalCtrl', ['$scope', '$modal',
-  function($scope, $modal) {
-
-    $scope.open = function() {
-      var modalInstance = $modal.open({
-        templateUrl: 'templates/modal/addGameModalTemplate.html',
-        controller: 'AddGameModalInstanceCtrl',
-        size: 'sm',
-        resolve: {
-          gamesList: function() {return $scope.gamesList}
-        }
-      });
-
-      modalInstance.result.then(function(game) {
-        $scope.$emit('GameModelChanged', game);
-      }, function() {
-        console.log('Modal Dismissed, no service called');
-      });
-    };
-
-  }])
-  .controller('AddGameModalInstanceCtrl', ['$scope', '$modalInstance', 'AddGame', 'gamesList',
-  function($scope, $modalInstance, AddGame, gamesList) {
+    $scope.$on('GameModelChanged', function() {
+      $scope.getGames();
+    });
+  })
+  .controller('AddGameModalInstanceCtrl', function($scope, $modalInstance, $window, AddGame, gamesList) {
     $scope.game = {};
     $scope.inArray = false;
 
     $scope.save = function() {
       angular.forEach(gamesList, function(gameCheck) {
-        if(gameCheck.title === $scope.game.title)
+        if(gameCheck.title === $scope.game.title){
           $scope.inArray = true;
+        }
       });
 
-      if(!$scope.inArray) {
-        AddGame.addGame($scope.game.title).then(
-        function(response) {
-          $scope.game = response;
-        },
-        function(response) {
-          console.log('Error: ', response);
-        });
-      } else {
-        alert('Game already added to list. Check "Owned Games" page.');
-      }
+        if(!$scope.inArray) {
+          AddGame.addGame($scope.game.title).then(
+            function(response) {
+              $scope.game = response;
+            },
+            function(response) {
+              console.log('Error: ', response);
+            });
+          } else {
+            $window.alert('Game already added to list. Check "Owned Games" page.');
+          }
 
-      $modalInstance.close($scope.game);
-    };
+          $modalInstance.close($scope.game);
+        };
 
-    $scope.cancel = function() {
-      $modalInstance.dismiss('cancel');
-    };
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel');
+        };
 
-  }]);
+      });

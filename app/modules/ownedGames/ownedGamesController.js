@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('xboxGameVotingApp')
-  .controller('OwnedGamesCtrl', ['$scope', 'GetGames',
-  function($scope, GetGames) {
+  .controller('OwnedGamesCtrl', function($scope, GetGames) {
     $scope.gamesList =  [];
     $scope.ownedGames = [];
 
@@ -10,11 +9,12 @@ angular.module('xboxGameVotingApp')
       $scope.gamesList = response;
 
       angular.forEach($scope.gamesList, function(ownedGame) {
-        if(ownedGame.status === 'gotit')
+        if(ownedGame.status === 'gotit') {
           $scope.ownedGames.push(ownedGame);
+        }
       });
     }, function(response) {
       console.log('Error: ', response);
     });
 
-  }]);
+  });

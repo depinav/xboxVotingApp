@@ -1,6 +1,5 @@
 div.row
-  div(ng-controller="AddGameModalCtrl")
-    button.btn-primary(ng-click="open()") Add a Game
+  button.btn-primary(ng-click="open()") Add a Game
   div
     table.table.table-condensed.table-striped
       thead
@@ -14,6 +13,6 @@ div.row
           th {{game.title}}
           th {{game.votes}}
           th
-            button.btn(ng-controller="VoteForGameCtrl", ng-click="vote(game)") Vote!
+            button.btn(ng-click="vote(game)") Vote!
           th
-            button.btn(ng-controller="SetOwnedGameCtrl", ng-click="owned(game)") Owned?
+            button.btn(ng-click="owned(game)") Owned?
