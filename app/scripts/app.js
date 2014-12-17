@@ -8,6 +8,7 @@
       'ngSanitize',
       'ngRoute',
       'API_MODULE',
+      'DIRECTIVES_MODULE',
       'ui.bootstrap'
     ])
     .config(function ($routeProvider) {
