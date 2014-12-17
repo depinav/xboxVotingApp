@@ -1,0 +1,7 @@
+.modal-header
+  h3.modal-title Add a Game
+.modal-body
+  input(type="text", placeholder="Game Title", ng-model="game.title")
+.modal-footer
+  button.btn.btn-primary(ng-click="save()") Save
+  button.btn.btn-warning(ng-click="cancel()") Cancel
