@@ -30,54 +30,38 @@ angular.module('xboxGameVotingApp')
 
       if(day.getDay() !== 6 && day.getDay() !== 0) {
 
-        if(localStorage.getItem('voted') !== true || localStorage.getItem('day') !== new Date().getDay()) {
+        if(localStorage.getItem('voted') !== true ||
+          localStorage.getItem('day') !== new Date().getDay()) {
 
           localStorage.setItem('voted', true);
           localStorage.setItem('day', new Date().getDay());
           console.log(localStorage.getItem('day'));
           AddVote.addVote(game.id).then(
-            function () {
-              $window.alert('Done!');
-              $scope.$emit('GameModelChanged', game);
-            },
-            function () {
-              console.log('Service call failed.');
-            });
-          } else {
-            $window.alert('Already voted today. Try again tomorrow.');
-          }
-        } else {
-          $window.alert('Voting closed on Saturday and Sunday.');
-        }
-      };
-
-      $scope.owned = function(game) {
-        SetGotIt.setGotIt(game.id).then(
-        function () {
-          $window.alert('Game set to owned');
-          $scope.$emit('GameModelChanged', game);
-        },
-        function () {
-          console.log('Service call failed.');
-        });
-      };
-
-        $scope.open = function () {
-          var modalInstance = $modal.open({
-            templateUrl: 'templates/modal/addGameModalTemplate.html',
-            controller: 'AddGameModalInstanceCtrl',
-            size: 'sm',
-            resolve: {
-              gamesList: function () {return $scope.gamesList;}
-            }
-          });
-
-          modalInstance.result.then(function(game) {
+          function () {
+            $window.alert('Done!');
             $scope.$emit('GameModelChanged', game);
-          }, function () {
-            console.log('Modal Dismissed, no service called');
+          },
+          function () {
+            console.log('Service call failed.');
           });
-        };
+        } else {
+          $window.alert('Already voted today. Try again tomorrow.');
+        }
+      } else {
+        $window.alert('Voting closed on Saturday and Sunday.');
+      }
+    };
+
+    $scope.owned = function(game) {
+      SetGotIt.setGotIt(game.id).then(
+      function() {
+        $window.alert('Game set to owned');
+        $scope.$emit('GameModelChanged', game);
+      },
+      function() {
+        console.log('Service call failed.');
+      });
+    };
 
     $scope.$on('GameModelChanged', function () {
       $scope.getGames();
