@@ -1,20 +1,17 @@
 'use strict';
 
 angular.module('xboxGameVotingApp')
-  .controller('WantedGamesCtrl', function($scope, $window, $modal, GetGames, AddVote, SetGotIt) {
+  .controller('WantedGamesCtrl', function($scope, $window, $modal, $log, GetGames,
+                                          AddVote, SetGotIt, StorageService) {
     $scope.gamesList = [];
     $scope.wantedGames = [];
     $scope.ordered = 'votes';
     $scope.showModal = false;
     var day = new Date();
 
-
-    if(typeof(Storage) !== undefined) {
-      if(localStorage.getItem('voted') === null || localStorage.getItem('day') !== new Date().getDay()) {
-        localStorage.setItem('voted', false);
-      }
-    } else {
-      console.log('Couldn\'t do it');
+    if(StorageService.getStorage('voted') === null ||
+      StorageService.getStorage('day') !== new Date().getDay()) {
+      StorageService.setStorage('voted', false);
     }
 
     $scope.getGames = function() {
@@ -28,7 +25,7 @@ angular.module('xboxGameVotingApp')
           }
         });
       }, function(response) {
-        console.log('Error: ', response);
+        $log.error('Error: ' + response);
       });
     };
 
@@ -38,18 +35,19 @@ angular.module('xboxGameVotingApp')
 
       if(day.getDay() !== 6 && day.getDay() !== 0) {
 
-        if(localStorage.getItem('voted') !== true || localStorage.getItem('day') !== new Date().getDay()) {
+        if(StorageService.getStorage('voted') !== 'true' ||
+           StorageService.getStorage('day') !== new Date().getDay()) {
 
-          localStorage.setItem('voted', true);
-          localStorage.setItem('day', new Date().getDay());
-          console.log(localStorage.getItem('day'));
+          StorageService.setStorage('voted', true);
+          StorageService.setStorage('day', new Date().getDay());
+
           AddVote.addVote(game.id).then(
             function() {
               $window.alert('Done!');
               $scope.$emit('GameModelChanged', game);
             },
             function() {
-              console.log('Service call failed.');
+              $log.error('Service call failed.');
             });
           } else {
             $window.alert('Already voted today. Try again tomorrow.');
@@ -66,7 +64,7 @@ angular.module('xboxGameVotingApp')
             $scope.$emit('GameModelChanged', game);
           },
           function() {
-            console.log('Service call failed.');
+            $log.error('Service call failed.');
           });
         };
 
@@ -83,7 +81,7 @@ angular.module('xboxGameVotingApp')
           modalInstance.result.then(function(game) {
             $scope.$emit('GameModelChanged', game);
           }, function() {
-            console.log('Modal Dismissed, no service called');
+            $log.warn('Modal Dismissed, no service called');
           });
         };
 
@@ -91,7 +89,8 @@ angular.module('xboxGameVotingApp')
       $scope.getGames();
     });
   })
-  .controller('AddGameModalInstanceCtrl', function($scope, $modalInstance, $window, AddGame, gamesList) {
+  .controller('AddGameModalInstanceCtrl', function($scope, $modalInstance, $window,
+                                                   $log, AddGame, gamesList) {
     $scope.game = {};
     $scope.inArray = false;
 
@@ -108,7 +107,7 @@ angular.module('xboxGameVotingApp')
               $scope.game = response;
             },
             function(response) {
-              console.log('Error: ', response);
+              $log.error('Error: ', response);
             });
           } else {
             $window.alert('Game already added to list. Check "Owned Games" page.');
