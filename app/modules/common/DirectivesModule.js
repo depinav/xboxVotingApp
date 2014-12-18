@@ -1,4 +1,4 @@
 'use strict';
 
 
-angular.module('DIRECTIVES_MODULE', []);
+angular.module('DIRECTIVES_MODULE', ['nerd.directives.modal']);
