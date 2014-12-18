@@ -9,6 +9,7 @@
       'ngRoute',
       'API_MODULE',
       'DIRECTIVES_MODULE',
+      'SERVICES_MODULE',
       'ui.bootstrap'
     ])
     .config(function ($routeProvider) {
